@@ -1,0 +1,64 @@
+@{
+    ViewData["Title"] = $"Dashboard - {@Context.Session.GetString("UserSession")}";
+}
+
+@model OperationFunction
+
+<div>
+    @{
+        if (Context.Session.GetString("UserSession") == null)
+        {
+            <div class="text-center p-5">
+                <h1 class="fs-3 p-3">Lo siento debes logearte primero para poder acceder al dashboard</h1>
+
+                <form asp-action="Index" method="get">
+                    <button class="btn btn-danger btn-lg mt-3">Inicio</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            @* NAV *@
+            <div class="container border-bottom border-dark p-2">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col col-6">
+                        <h1 class="">Welcome @Context.Session.GetString("UserSession")</h1>
+                    </div>
+                    <form asp-action="Logout" method="post" class="col col-6 text-end">
+                        <input name="logout" class="btn btn-danger w-sm-50 border-2 border-dark shadow fw-bold" type="submit"
+                            value="Log out">
+                    </form>
+                </div>
+            </div>
+
+            @* BODY BUTTONS *@
+            <div class="container text-center mt-2 p-5 mt-md-4">
+                
+                <h2 class="fs-1 py-2">@Context.Session.GetInt32("UserNumber")</h2>
+                
+                <div class="container col-md-8 text-center mx-auto">
+                    @* Form Action Update *@
+                    <form class="row col-md-10 my-auto mx-auto g-3 g-md-4 py-2" asp-action="Update" method="post">
+
+                        @* ADD *@
+                        <input type="submit" asp-for="Add" value="+ 1"
+                            class="col-md-5 btn btn-warning p-3 p-md-5 btn-lg btn-block text-dark fw-bold fs-3 border border-3 border-dark shadow mx-auto" />
+
+                        @* SUBSTRACT *@
+                        <input type="submit" asp-for="Substract" value="- 1"
+                            class="col-md-5 btn btn-primary p-3 p-md-5 btn-lg btn-block text-white fw-bold fs-3 border border-3 border-dark shadow mx-auto" />
+
+                        @* MULTIPLY *@
+                        <input type="submit" asp-for="Multiply" value="x 2"
+                            class="col-md-5 btn btn-danger p-3 p-md-5 btn-lg btn-block text-white fw-bold fs-3 border border-3 border-dark shadow mx-auto" />
+
+                        @* RANDOM *@
+                        <input type="submit" asp-for="Random" value="+ Random"
+                            class="col-md-5 btn btn-success p-3 p-md-5 btn-lg btn-block text-dark fw-bold fs-3 border border-3 border-dark shadow mx-auto" />
+                    </form>
+                </div>
+            </div>
+        }
+    }
+
+</div>
